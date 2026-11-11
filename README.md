@@ -78,8 +78,7 @@ across seeds.
 ## PRISM results
 
 Cross-validated, so every one of GossipCop++'s 20,505 articles is scored once by
-a model that never trained on it. Fake = human-fake + machine-fake; real =
-human-real + machine-real.
+a model that never trained on it. 
 
 | System | GossipCop++ (Acc / F1) | PolitiFact++ (Acc / F1) |
 |---|---|---|
