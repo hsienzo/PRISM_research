@@ -35,11 +35,10 @@ within 0.3 points of the paper, and F1 comes in 0.8 points higher.
   library imports.
 - **Removed the multi-GPU server dependency.** The original feature step needed a
   [mosec](https://github.com/mosecorg/mosec) inference server running several 2.7B–7B
-  LLMs. I wrote `dataset/3_gen_features_local.py`, which computes the same per-token
-  log-likelihood fingerprints in-process, so the whole pipeline fits on one T4.
+  LLMs. I wrote `3_gen_features_local.py`, which computes the same per-token
+  log-likelihood fingerprints in-process.
 - **Converted the raw data.** The public datasets ship as JSON dicts (`HF/HR/MF/MR.json`),
-  not the JSONL format the pipeline expects. `dataset/0_convert.py` handles the conversion
-  and the 4-class labeling.
+  not the JSONL format the pipeline expects. 
 - **Reimplemented and trained the classifier.** A Transformer + CRF sequence classifier over
   the perplexity fingerprints (`LIFE_train/`).
 - **Packaged it as a Colab notebook.** Ran experiments on Google Colab.
