@@ -1,4 +1,6 @@
-# Reproducing LIFE: LLM-Generated Fake News Detection
+# PRISM - Provenance-Routed Inference via Specialist Models for Fake News Detection
+
+## Reproducing LIFE: LLM-Generated Fake News Detection
 
 **Python · PyTorch · HuggingFace Transformers · NLTK · Pandas · Scikit-learn**
 
@@ -40,5 +42,5 @@ within 0.3 points of the paper, and F1 comes in 0.8 points higher.
   and the 4-class labeling.
 - **Reimplemented and trained the classifier.** A Transformer + CRF sequence classifier over
   the perplexity fingerprints (`LIFE_train/`).
-- **Packaged it as a Colab notebook.** `LIFE_colab.ipynb` runs every step top to bottom.
+- **Packaged it as a Colab notebook.** Ran experiments on Google Colab.
 
