@@ -12,7 +12,7 @@ free-tier GPU, reimplemented the classifier, and matched the paper's reported re
 
 > Reproduction by **Hsien Zo Cheong** (University of Pittsburgh, B.S. Computer Science).
 > The LIFE method and the original code belong to the paper's authors <https://arxiv.org/abs/2508.12632>. This repo is a
-> reproduction for study and verification.
+> reproduction for study, verification and experiments.
 
 ---
 
