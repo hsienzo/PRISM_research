@@ -43,5 +43,42 @@ within 0.3 points of the paper, and F1 comes in 0.8 points higher.
   the perplexity fingerprints.
 - **Packaged it as a Colab notebook.** Ran experiments on Google Colab.
 
+## AI vs human text classification
+
+LIFE works well on LLM-generated fake news, but it breaks down once human-written
+articles are mixed in. When I pooled human and machine articles in PolitiFact++,
+accuracy dropped from 86.8% to 71.9%. A four-class breakdown showed why: the
+detector caught **0% of human-written fake news**. It had learned whether text was
+machine-generated, not whether it was true.
+
+PRISM separates those two questions. Its first stage is a router, a fine-tuned
+[RoBERTa / BERT] classifier that predicts whether an article was written by a human
+or an LLM.
+
+| Router | Accuracy | F1 |
+|---|---|---|
+| Human vs LLM | [x%] | [x%] |
+
+## Human written fake news classification
+
+Articles the router labels as human-written go to a separate classifier trained
+only on human-written real and fake news. Articles labeled as LLM-written go to the
+LIFE-based fingerprint classifier.
+
+| Specialist | Model | Accuracy | F1 |
+|---|---|---|---|
+| Human-written | [RoBERTa / BERT] | [x%] | [x%] |
+| LLM-written | LIFE (Transformer + CRF) | [x%] | [x%] |
+
+## PRISM results
+
+End to end, router errors carry through to the specialists, so this is the number
+that matters. On 20,000+ articles across human and LLM sources:
+
+| System | Accuracy | F1 |
+|---|---|---|
+| LIFE alone (pooled human + LLM) | [x%] | [x%] |
+| **PRISM** | **84.4%** | **83.6%** |
+
 ## Dataset
 <https://github.com/mbzuai-nlp/Fakenews-dataset>
