@@ -43,3 +43,5 @@ within 0.3 points of the paper, and F1 comes in 0.8 points higher.
   the perplexity fingerprints (`LIFE_train/`).
 - **Packaged it as a Colab notebook.** Ran experiments on Google Colab.
 
+## Dataset
+<https://github.com/mbzuai-nlp/Fakenews-dataset>
