@@ -40,7 +40,7 @@ within 0.3 points of the paper, and F1 comes in 0.8 points higher.
 - **Converted the raw data.** The public datasets ship as JSON dicts (`HF/HR/MF/MR.json`),
   not the JSONL format the pipeline expects. 
 - **Reimplemented and trained the classifier.** A Transformer + CRF sequence classifier over
-  the perplexity fingerprints (`LIFE_train/`).
+  the perplexity fingerprints.
 - **Packaged it as a Colab notebook.** Ran experiments on Google Colab.
 
 ## Dataset
