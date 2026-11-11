@@ -45,40 +45,52 @@ within 0.3 points of the paper, and F1 comes in 0.8 points higher.
 
 ## AI vs human text classification
 
-LIFE works well on LLM-generated fake news, but it breaks down once human-written
-articles are mixed in. When I pooled human and machine articles in PolitiFact++,
-accuracy dropped from 86.8% to 71.9%. A four-class breakdown showed why: the
-detector caught **0% of human-written fake news**. It had learned whether text was
-machine-generated, not whether it was true.
+LIFE separates LLM-written fake news from LLM-written real news well, but it fails
+once human-written articles are mixed in. On the full GossipCop++ benchmark
+(human-fake, human-real, machine-fake, machine-real), LIFE caught **0% of
+human-written fake news** (0% precision, 0% recall). It learns whether text was
+machine-generated, not whether it is true.
 
-PRISM separates those two questions. Its first stage is a router, a fine-tuned
-[RoBERTa / BERT] classifier that predicts whether an article was written by a human
-or an LLM.
+PRISM's first stage is a **RoBERTa provenance router** that labels each article
+as human-written or LLM-generated.
 
-| Router | Accuracy | F1 |
-|---|---|---|
-| Human vs LLM | [x%] | [x%] |
+| Router (GossipCop++) | Accuracy |
+|---|---|
+| Human vs LLM | **95.01%** |
+
+5.8% of human-written articles (711 of 12,252) are misrouted to LIFE.
 
 ## Human written fake news classification
 
-Articles the router labels as human-written go to a separate classifier trained
-only on human-written real and fake news. Articles labeled as LLM-written go to the
-LIFE-based fingerprint classifier.
+Articles the router labels as human-written go to a **fine-tuned BERT** classifier
+trained on veracity within human-written news. Articles labeled LLM-generated go
+to LIFE. Each branch is scored on the articles it actually receives from the router:
 
-| Specialist | Model | Accuracy | F1 |
-|---|---|---|---|
-| Human-written | [RoBERTa / BERT] | [x%] | [x%] |
-| LLM-written | LIFE (Transformer + CRF) | [x%] | [x%] |
+| Branch | GossipCop++ (Acc / F1) | PolitiFact++ (Acc) |
+|---|---|---|
+| Human-written → BERT | 80.78 / 77.92 | 80.56 |
+| LLM-generated → LIFE | 89.44 / 89.42 | 77.71 |
+
+On GossipCop++, the human branch is the weaker half. The PolitiFact++ reversal
+isn't reliable: with only 520 articles, LIFE's branch varies by ±17 points
+across seeds.
 
 ## PRISM results
 
-End to end, router errors carry through to the specialists, so this is the number
-that matters. On 20,000+ articles across human and LLM sources:
+Cross-validated, so every one of GossipCop++'s 20,505 articles is scored once by
+a model that never trained on it. Fake = human-fake + machine-fake; real =
+human-real + machine-real.
 
-| System | Accuracy | F1 |
+| System | GossipCop++ (Acc / F1) | PolitiFact++ (Acc / F1) |
 |---|---|---|
-| LIFE alone (pooled human + LLM) | [x%] | [x%] |
-| **PRISM** | **84.4%** | **83.6%** |
+| LIFE alone | 76.3 / 72.0 | 71.9 / 65.2 |
+| **PRISM** | **84.4 / 83.6** | **80.0 / 77.8** |
+| BERT alone (no routing) | 85.2 / 84.7 | 85.0 / 83.6 |
+
+PRISM beats LIFE alone by 8–9 accuracy points, but it doesn't beat a single BERT
+classifier trained on everything. The gap comes from the weaker human branch and
+from the router's misroutes, which send human-written fakes to LIFE, which cannot
+detect them.
 
 ## Dataset
 <https://github.com/mbzuai-nlp/Fakenews-dataset>
