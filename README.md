@@ -11,7 +11,7 @@ The released code did not run as published. I fixed it, made it runnable on a si
 free-tier GPU, reimplemented the classifier, and matched the paper's reported results.
 
 > Reproduction by **Hsien Zo Cheong** (University of Pittsburgh, B.S. Computer Science).
-> The LIFE method and the original code belong to the paper's authors; this repo is a
+> The LIFE method and the original code belong to the paper's authors <https://arxiv.org/abs/2508.12632>. This repo is a
 > reproduction for study and verification.
 
 ---
